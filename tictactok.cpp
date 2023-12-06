@@ -1,7 +1,14 @@
 #include <iostream>
+#include <conio.h>
 #define RED "\033[31m"
 #define LBLUE "\033[94m"
 #define RESET "\033[0m"
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define Enter 13
+
 
 int Win(std::string matrix[][3])
 {
@@ -27,15 +34,15 @@ int Win(std::string matrix[][3])
                 }
             }
         }
-        if (matrix[i][0] != "." && matrix[i][1] != "." && matrix[i][2] != ".")
+        if (matrix[0][i] != "." && matrix[1][i] != "." && matrix[2][i] != ".")
         {
             if (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i])
             {
-                if (matrix[i][0] == "x")
+                if (matrix[0][i] == "x")
                 {
                     return 1;
                 }
-                else if (matrix[i][0] == "o")
+                else if (matrix[0][i] == "o")
                 {
                     return 2;
                 }
@@ -81,7 +88,13 @@ void drawBoard(std::string matrix[][3]) {
        // std::cout << i + 1 << " ";
        std::cout<<"|";
         for (int j = 0; j < 3; j++) {
-            std::cout <<" "<< matrix[i][j]<<" ";
+            if (matrix[i][j]=="o"){
+                std::cout <<RED<<" "<< matrix[i][j]<<RESET<<" ";
+            }else if (matrix[i][j]=="x"){
+                std::cout <<LBLUE<<" "<< matrix[i][j]<<RESET<<" ";
+            }else{
+                std::cout <<" "<< matrix[i][j]<<" ";
+            }
             if (j < 2) std::cout << "|";
         }
         std::cout<<"|";
@@ -93,7 +106,8 @@ void drawBoard(std::string matrix[][3]) {
 }
 int main()
 {
-    system("cls");          
+    system("cls");
+    int i = 0, j = 0;          
     int victory;             
     std::string mat00[3][3]; // this is the matrix for the player
 
@@ -105,38 +119,80 @@ int main()
             mat00[i][j] = ".";
         }
     }
-
-    int i, j;
-
+    //std::cout << i << " " << j << "\n";
     // A loop to run through our matrix
     for (int k = 0; k < 9; k++)
     {
+        i=j=0;
+        std::cout << i << " " << j << "\n";
+        bool enter = true;
         drawBoard(mat00);
     
+         do
+        {
+            switch ((getch()))
+            {
+            case KEY_UP:
+                system("cls");
+                if ( i > 0)i--;
+                if (k%2==0){
+                    std::cout <<RED<< i << " " << j <<RESET<< "\n";
+                }else{
+                    std::cout <<LBLUE<< i << " " << j <<RESET<< "\n";
+                }
+                drawBoard(mat00);
+                break;
+            case KEY_DOWN:
+                system("cls");
+                if ( i < 2)i++;
+                if (k%2==0){
+                    std::cout <<RED<< i << " " << j <<RESET<< "\n";
+                }else{
+                    std::cout <<LBLUE<< i << " " << j <<RESET<< "\n";
+                }
+                drawBoard(mat00);
+                break;
+            case KEY_LEFT:
+                system("cls");
+                if ( j > 0)j--;
+                if (k%2==0){
+                    std::cout <<RED<< i << " " << j <<RESET<< "\n";
+                }else{
+                    std::cout <<LBLUE<< i << " " << j <<RESET<< "\n";
+                }
+                drawBoard(mat00);
+                break;
+            case KEY_RIGHT:
+                system("cls");
+                if ( j < 2) j++ ;
+                if (k%2==0){
+                    std::cout <<RED<< i << " " << j <<RESET<< "\n";
+                }else{
+                    std::cout <<LBLUE<< i << " " << j <<RESET<< "\n";
+                }
+                drawBoard(mat00);
+                break;
+            case Enter :
+                if (mat00[i][j]!="x" && mat00[i][j]!="o")
+                {
+                    enter = false ;
+                }
+                break; 
+            default:
+                    std::cout<< "goh nakhor,madar jende" << std::endl; 
+                break;
+            }
+
+        } while (enter);
         if (k % 2 == 0)
         {
-
-            do
-            {
-                std::cout << RED << "Player O : " << RESET;
-                std::cin >> i >> j;
-
-            } while ((i > 2 || i < 0 || j < 0 || j > 2) && mat00[i][j] != "." || mat00[i][j] == "o" || mat00[i][j] == "x");
             mat00[i][j] = "o";
         }
-        else
+        else if (k % 2 == 1)
         {
-
-            do
-            {
-
-                std::cout << LBLUE << "Player X : " << RESET;
-                std::cin >> i >> j;
-
-            } while ((i > 2 || i < 0 || j < 0 || j > 2) && mat00[i][j] != "." || mat00[i][j] == "o" || mat00[i][j] == "x");
-
             mat00[i][j] = "x";
         }
+
         system("cls");
 
         victory = Win(mat00);
