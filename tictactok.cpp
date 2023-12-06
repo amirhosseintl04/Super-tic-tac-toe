@@ -86,8 +86,8 @@ void drawBoard(std::string matrix[][3])
 }
 int main()
 {
-    system("cls");           // for convinience
-    int victory;             // checks for the winner
+    system("cls");          
+    int victory;             
     std::string mat00[3][3]; // this is the matrix for the player
 
     // initialize the starter matrix to 0 for checking
@@ -98,13 +98,14 @@ int main()
             mat00[i][j] = "0";
         }
     }
+
     int i, j;
 
     // A loop to run through our matrix
     for (int k = 0; k < 9; k++)
     {
         drawBoard(mat00);
-        // T
+    
         if (k % 2 == 0)
         {
 
@@ -147,14 +148,3 @@ int main()
     std::cout << "DRAW";
     return 0;
 }
-
-/*از k بزرگ تر 5 شروع کن شرط ویکتوری را چک کردن*/
-// O RED zooj ... X LBLUE fard
-// ایکس میتونه جای او را بگیره BUG
-
-// شرط برنده شدن مساوی بودن این خونه پایینیا
-// player mitone X ya O bashe
-//[i][0]== player && [i][1] == player && [i][2] == player
-//[0][i]== player && [1][i] == player && [2][i] == player
-//[0][0]== player && [1][1] == player && [2][2] == player
-//[0][2]== player && [1][1] == player && [2][0] == player
