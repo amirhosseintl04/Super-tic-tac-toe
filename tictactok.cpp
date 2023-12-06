@@ -27,7 +27,7 @@ int Win(std::string matrix[][3])
                 }
             }
         }
-        if (matrix[i][0] != "." && matrix[i][1] != "." && matrix[i][2] != ".")
+        if (matrix[0][i] != "." && matrix[1][i] != "." && matrix[2][i] != ".")
         {
             if (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i])
             {
