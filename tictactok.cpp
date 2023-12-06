@@ -119,12 +119,16 @@ int main()
             mat00[i][j] = ".";
         }
     }
-    //std::cout << i << " " << j << "\n";
     // A loop to run through our matrix
     for (int k = 0; k < 9; k++)
     {
         i=j=0;
-        std::cout << i << " " << j << "\n";
+        if(k%2==0){
+            std::cout <<RED<< i << " " << j <<RESET<< "\n";
+        }else{
+            std::cout <<LBLUE<< i << " " << j <<RESET<< "\n";
+        }
+        
         bool enter = true;
         drawBoard(mat00);
     
