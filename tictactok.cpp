@@ -104,15 +104,18 @@ void drawBoard(std::string matrix[][3])
     std::cout << "+-----------+" << std::endl;
     std::cout << std::endl;
 }
-/*
-void moving()
-*/
+
+void moving(std::string matBackup[][3]){
+    
+}
+
 int main()
 {
+    
     system("cls");
     int victory;
     std::string mat00[3][3]; // this is the matrix for the player
-
+    // moving(mat00);
     // initialize the starter matrix to 0 for checking
     for (int i = 0; i < 3; i++)
     {
@@ -143,7 +146,8 @@ int main()
                         {
                         case KEY_UP:
                             system("cls");
-                            mat00[i][j] = ".";
+                            
+                            
                             if (i > 0)
                                 i--;
 
@@ -155,11 +159,12 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
+                            mat00[i][j] = ".";
                             break;
 
                         case KEY_DOWN:
                             system("cls");
-                            mat00[i][j] = ".";
+                            
                             if (i < 2)
                                 i++;
 
@@ -170,11 +175,12 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
+                            mat00[i][j] = ".";
                             break;
 
                         case KEY_LEFT:
                             system("cls");
-                            mat00[i][j] = ".";
+                            
                             if (j > 0)
                                 j--;
 
@@ -185,12 +191,13 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
+                            mat00[i][j] = ".";
                             break;
 
                         case KEY_RIGHT:
 
                             system("cls");
-                            mat00[i][j] = ".";
+                            
                             if (j < 2)
                                 j++;
                             std::cout << i << " " << j << "\n";
@@ -200,6 +207,7 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
+                            mat00[i][j] = ".";
                             break;
 
                         case Enter:
