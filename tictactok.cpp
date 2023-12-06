@@ -2,61 +2,72 @@
 #define RED "\033[31m"
 #define LBLUE "\033[94m"
 #define RESET "\033[0m"
-/*
-return 1 == x won ;
-return 2 == o won ;
-retrurn 0 == no one won  ;
- */
+
 int Win(std::string matrix[][3])
 {
-
+    /*
+    return 1 == x won
+    return 2 == o won
+    retrurn 0 == no one won
+     */
     for (int i = 0; i < 3; i++)
     {
-
-        if (matrix[i][0] == matrix[i][1] && matrix[i][1] == matrix[i][2])
+        if (matrix[i][0] != "0" && matrix[i][1] != "0" && matrix[i][2] != "0")
         {
-            if (matrix[i][0] == "x")
+            if (matrix[i][0] == matrix[i][1] && matrix[i][1] == matrix[i][2])
             {
-                return 1;
-            }
-            else if (matrix[i][0] == "o")
-            {
-                return 2;
+
+                if (matrix[i][0] == "x")
+                {
+                    return 1;
+                }
+                else if (matrix[i][0] == "o")
+                {
+                    return 2;
+                }
             }
         }
-
-        if (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i])
+        if (matrix[i][0] != "0" && matrix[i][1] != "0" && matrix[i][2] != "0")
         {
-            if (matrix[i][0] == "x")
+            if (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i])
+            {
+                if (matrix[i][0] == "x")
+                {
+                    return 1;
+                }
+                else if (matrix[i][0] == "o")
+                {
+                    return 2;
+                }
+            }
+        }
+    }
+    if (matrix[0][0] != "0" && matrix[1][1] != "0" && matrix[2][2] != "0")
+    {
+        if (matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2])
+        {
+            if (matrix[0][0] == "x")
             {
                 return 1;
             }
-            else if (matrix[i][0] == "o")
+            else if (matrix[0][0] == "o")
             {
                 return 2;
             }
         }
     }
-    if (matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2])
-    {
-        if (matrix[0][0] == "x")
+    if (matrix[2][0] != "0" && matrix[1][1] != "0" && matrix[0][2] != "0")
         {
-            return 1;
-        }
-        else if (matrix[0][0] == "o")
+        if (matrix[2][0] == matrix[1][1] && matrix[1][1] == matrix[0][2])
         {
-            return 2;
-        }
-    }
-    if (matrix[2][0] == matrix[1][1] && matrix[1][1] == matrix[0][2])
-    {
-        if (matrix[1][1] == "x")
-        {
-            return 1;
-        }
-        else if (matrix[1][1] == "o")
-        {
-            return 2;
+            if (matrix[1][1] == "x")
+            {
+                return 1;
+            }
+            else if (matrix[1][1] == "o")
+            {
+                return 2;
+            }
         }
     }
 
@@ -75,9 +86,11 @@ void drawBoard(std::string matrix[][3])
 }
 int main()
 {
-    system("cls"); // for convinience
-    int victory; //checks for the wo
-    std::string mat00[3][3];
+    system("cls");           // for convinience
+    int victory;             // checks for the winner
+    std::string mat00[3][3]; // this is the matrix for the player
+
+    // initialize the starter matrix to 0 for checking
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -87,15 +100,17 @@ int main()
     }
     int i, j;
 
+    // A loop to run through our matrix
     for (int k = 0; k < 9; k++)
     {
         drawBoard(mat00);
+        // T
         if (k % 2 == 0)
         {
 
             do
             {
-                std::cout << RED << "ij" << k + 1 << RESET << " ";
+                std::cout << RED << "Player O : " << RESET;
                 std::cin >> i >> j;
 
             } while ((i > 2 || i < 0 || j < 0 || j > 2) && mat00[i][j] != "0" || mat00[i][j] == "o" || mat00[i][j] == "x");
@@ -107,7 +122,7 @@ int main()
             do
             {
 
-                std::cout << LBLUE << "ij" << k + 1 << RESET << " ";
+                std::cout << LBLUE << "Player X : " << RESET;
                 std::cin >> i >> j;
 
             } while ((i > 2 || i < 0 || j < 0 || j > 2) && mat00[i][j] != "0" || mat00[i][j] == "o" || mat00[i][j] == "x");
@@ -128,9 +143,8 @@ int main()
             std::cout << "O won";
             return 0;
         }
-
     }
-    std::cout<<"DRAW";
+    std::cout << "DRAW";
     return 0;
 }
 
