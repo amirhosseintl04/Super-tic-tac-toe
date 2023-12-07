@@ -145,6 +145,7 @@ int main()
                         switch ((getch()))
                         {
                         case KEY_UP:
+                            mat00[i][j] = ".";
                             system("cls");
                             
                             
@@ -152,17 +153,18 @@ int main()
                                 i--;
 
                             std::cout << i << " " << j << "\n";
-
+                            //system("cls");
                             if (k % 2 == 0 && mat00[i][j] != "x")
                                 mat00[i][j] = "o";
                             else if (k % 2 == 1 && mat00[i][j] != "o")
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
-                            mat00[i][j] = ".";
+                            
                             break;
 
                         case KEY_DOWN:
+                            mat00[i][j] = ".";
                             system("cls");
                             
                             if (i < 2)
@@ -175,10 +177,11 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
-                            mat00[i][j] = ".";
+                            
                             break;
 
                         case KEY_LEFT:
+                            mat00[i][j] = ".";
                             system("cls");
                             
                             if (j > 0)
@@ -191,11 +194,11 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
-                            mat00[i][j] = ".";
+                            
                             break;
 
                         case KEY_RIGHT:
-
+                            mat00[i][j] = ".";
                             system("cls");
                             
                             if (j < 2)
@@ -207,7 +210,7 @@ int main()
                                 mat00[i][j] = "x";
 
                             drawBoard(mat00);
-                            mat00[i][j] = ".";
+                            
                             break;
 
                         case Enter:
@@ -251,3 +254,10 @@ int main()
     std::cout << "DRAW";
     return 0;
 }
+
+
+/*
+bugs:
+if press any null key turn will expire;
+and big dick bug in changing elements;
+*/
