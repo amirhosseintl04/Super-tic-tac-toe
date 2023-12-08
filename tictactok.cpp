@@ -113,6 +113,7 @@ int main()
 {
     
     system("cls");
+    std::string temp=".";
     int victory;
     std::string mat00[3][3]; // this is the matrix for the player
     // moving(mat00);
@@ -145,7 +146,8 @@ int main()
                         switch ((getch()))
                         {
                         case KEY_UP:
-                            mat00[i][j] = ".";
+                            mat00[i][j] = temp;
+                            temp=mat00[i][j];
                             system("cls");
                             
                             
@@ -164,7 +166,9 @@ int main()
                             break;
 
                         case KEY_DOWN:
-                            mat00[i][j] = ".";
+                            //mat00[i][j] = ".";
+                            mat00[i][j] = temp;
+                            temp=mat00[i][j];
                             system("cls");
                             
                             if (i < 2)
@@ -181,7 +185,9 @@ int main()
                             break;
 
                         case KEY_LEFT:
-                            mat00[i][j] = ".";
+                            //mat00[i][j] = ".";
+                            mat00[i][j] = temp;
+                            temp=mat00[i][j];
                             system("cls");
                             
                             if (j > 0)
@@ -198,7 +204,9 @@ int main()
                             break;
 
                         case KEY_RIGHT:
-                            mat00[i][j] = ".";
+                            //mat00[i][j] = ".";
+                            mat00[i][j] = temp;
+                            temp=mat00[i][j];
                             system("cls");
                             
                             if (j < 2)
@@ -214,6 +222,7 @@ int main()
                             break;
 
                         case Enter:
+                            temp=".";
                             enter = false;
                             break;
                         default:
