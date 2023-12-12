@@ -5,19 +5,36 @@
 #define LBLUE "\033[94m"
 #define RESET "\033[0m"
 
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
+// #define KEY_UP 72
+// #define KEY_DOWN 80
+// #define KEY_LEFT 75
+// #define KEY_RIGHT 77
 #define Enter 13
+#define Back 8
+#define Space 32
 
+
+// struct Student {
+//     int age;
+//     std::string name;
+
+//     void tellName() {
+//         std::cout << name;
+//     }
+// };
+
+    /**
+    * return 1 == x won
+    * return 2 == o won
+    * retrurn 0 == no one won
+    * @param matrix lkgfgdlkgdl 
+    * @return if 1 then x win, if 2 o win, otherdftd tie
+    */
 int Win(std::string matrix[][3])
 {
-    /*
-    return 1 == x won
-    return 2 == o won
-    retrurn 0 == no one won
-    */
+    // Student haas(20, "MOhsen");
+    // haas.tellName();
+
     for (int i = 0; i < 3; i++)
     {
         if (matrix[i][0] != "." && matrix[i][1] != "." && matrix[i][2] != ".")
@@ -105,179 +122,124 @@ void drawBoard(std::string matrix[][3])
     std::cout << std::endl;
 }
 
-// void moving(std::string matBackup[][3])
-// {
-// }
-
-int main()
+void initialize(std::string mat[3][3])
 {
-
-    system("cls");
-    std::string temp = ".";
-    int victory;
-    std::string mat00[3][3]; // this is the matrix for the player
-    // moving(mat00);
-    // initialize the starter matrix to 0 for checking
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            mat00[i][j] = ".";
+            mat[i][j] = ".";
         }
     }
+}
 
-    // A loop to run through our matrix
-    for (int k = 0; k < 9; k++)
+void turn(std::string mat[3][3], int k, bool move, int i, int j)
+{
+    if (mat[i][j] == ".")
     {
         system("cls");
-        bool enter = true;
-        // std::cout << 0 << " " << 0 << std::endl;
-
-        for (int i = 0; i < 3; i++)
+        if (k % 2 == 0)
         {
-            for (int j = 0; j < 3; j++)
-            {
-
-                if (mat00[i][j] == ".")
-                {
-                    drawBoard(mat00);
-                    do
-                    {
-                        switch (getch())
-                        {
-                        case KEY_UP:
-
-                            if (i > 0 && mat00[i - 1][j] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i - 1][j];
-                                i--;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            else if (i > 0 && mat00[i - 2][j] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i - 2][j];
-                                i -= 2;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            break;
-
-                        case KEY_DOWN:
-                            if (i < 2 && mat00[i + 1][j] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i + 1][j];
-                                i++;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            else if (i < 2 && mat00[i + 2][j] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i + 2][j];
-                                i += 2;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            break;
-
-                        case KEY_LEFT:
-                            if (j > 0 && mat00[i][j - 1] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i][j - 1];
-                                j--;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            else if (j > 0 && mat00[i][j - 2] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i][j - 2];
-                                j -= 2;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            break;
-
-                        case KEY_RIGHT:
-                            if (j < 2 && mat00[i][j + 1] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i][j + 1];
-                                j++;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            else if (j < 2 && mat00[i][j + 2] == ".")
-                            {
-                                mat00[i][j] = temp;
-                                temp = mat00[i][j + 2];
-                                j += 2;
-                                system("cls");
-                                if (k % 2 == 0 && mat00[i][j] != "x")
-                                    mat00[i][j] = "o";
-                                else if (k % 2 == 1 && mat00[i][j] != "o")
-                                    mat00[i][j] = "x";
-                                drawBoard(mat00);
-                            }
-                            break;
-                        case Enter:
-                            enter = false;
-                            break;
-                        default:
-                            system("cls");
-                            std::cout << "goh nakhor" << std::endl;
-                            break;
-                        }
-
-                    } while (enter);
-                    break;
-                }
-                if (enter == false)
-                {
-                    break;
-                }
-            }
-            if (enter == false)
-            {
-                break;
-            }
+            mat[i][j] = "o";
         }
+        else
+        {
+            mat[i][j] = "x";
+        }
+        drawBoard(mat);
+        move = true;
+    }
+}
+void Switch(int k, bool move, std::string mat[3][3], bool enter,int i,int j)
+{
+    //bool moved=move;
+    do
+    {
+        switch (getch())
+        {
+        case '1':
+            i = 2; j = 0;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '2':
+            i = 2; j = 1;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '3':
+            i = 2; j = 2;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '4':
+            i = 1; j = 0;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '5':
+            i = 1; j = 1;
+            turn(mat, k, move, i, j);
+            break;
+        case '6':
+            i = 1; j = 2;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '7':
+            i = 0; j = 0;
+            turn(mat, k, move, i, j);
+            break;
+
+        case '8':
+            i = 0; j = 1;
+            turn(mat, k, move, i, j);
+            break;
+        case '9':
+            i = 0; j = 2;
+            turn(mat, k, move, i, j);
+            break;
+
+        case Space:
+            system("cls");
+            mat[i][j] = ".";
+            drawBoard(mat);
+            move = false;
+            break;
+
+        case Enter:
+            if (move)
+             {
+                enter = false;
+            }
+             else
+             {
+                 std::cout << "enteret nashod ";
+             }
+            break;
+        default:
+            system("cls");
+            std::cout << "kossher vared nakon" << std::endl;
+            break;
+        }
+    } while (enter);
+}
+
+int main()
+{
+    int i,j;
+    system("cls");
+    bool move = false;
+    int victory;
+    std::string mat00[3][3];
+    initialize(mat00);
+    for (int k = 0; k < 9; k++)
+    {
 
         system("cls");
-
+        bool enter = true;
+        drawBoard(mat00);
+        Switch(k, move, mat00, enter,i,j);
         victory = Win(mat00);
 
         if (victory == 1)
