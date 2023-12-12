@@ -82,6 +82,26 @@ int Win(std::string matrix[][3])
     return 0;
 }
 
+void exception(std::string mat[3][3], int z, int y, int x)
+{
+
+    for (int i = x+1; i < 3; i++)
+    {
+        for (int j = y+1; j < 3; j++)
+        {
+            if (mat[i][j] == ".")
+            {
+                if (z % 2 == 0 && mat[i][j] != "x")
+                    mat[i][j] = "o";
+                else if (z % 2 == 1 && mat[i][j] != "o")
+                    mat[i][j] = "x";
+                return ;
+            }
+            
+        }
+    }
+}
+
 void drawBoard(std::string matrix[][3])
 {
     std::cout << "+---+---+---+" << std::endl;
@@ -105,9 +125,6 @@ void drawBoard(std::string matrix[][3])
     std::cout << std::endl;
 }
 
-// void moving(std::string matBackup[][3])
-// {
-// }
 
 int main()
 {
@@ -158,6 +175,7 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
                             }
                             else if (i > 0 && mat00[i - 2][j] == ".")
                             {
@@ -170,9 +188,13 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
+                            }else if(k>6){
+                                system("cls");
+                                exception(mat00,k,j,i);
+                                drawBoard(mat00);
                             }
-                            break;
-
+                            
                         case KEY_DOWN:
                             if (i < 2 && mat00[i + 1][j] == ".")
                             {
@@ -185,6 +207,7 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
                             }
                             else if (i < 2 && mat00[i + 2][j] == ".")
                             {
@@ -197,8 +220,13 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
+                            }else if(k>6){
+                                system("cls");
+                                exception(mat00,k,j,i);
+                                drawBoard(mat00);
                             }
-                            break;
+                            
 
                         case KEY_LEFT:
                             if (j > 0 && mat00[i][j - 1] == ".")
@@ -212,6 +240,7 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
                             }
                             else if (j > 0 && mat00[i][j - 2] == ".")
                             {
@@ -224,8 +253,12 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
+                            }else if(k>6){
+                                system("cls");
+                                exception(mat00,k,j,i);
+                                drawBoard(mat00);
                             }
-                            break;
 
                         case KEY_RIGHT:
                             if (j < 2 && mat00[i][j + 1] == ".")
@@ -239,6 +272,7 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
                             }
                             else if (j < 2 && mat00[i][j + 2] == ".")
                             {
@@ -251,8 +285,13 @@ int main()
                                 else if (k % 2 == 1 && mat00[i][j] != "o")
                                     mat00[i][j] = "x";
                                 drawBoard(mat00);
+                                break;
+                            }else if(k>6){
+                                system("cls");
+                                exception(mat00,k,j,i);
+                                drawBoard(mat00);
                             }
-                            break;
+                            
                         case Enter:
                             enter = false;
                             break;
