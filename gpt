@@ -15,3 +15,14 @@ do {
         }
 
         switch (keyPressed) {
+
+
+/**
+ * Check for a win in a matrix.
+ * Returns:
+ *   1 if 'x' wins
+ *   2 if 'o' wins
+ *   0 if no one wins
+ * @param matrix The matrix to check for a win
+ * @return 1 if 'x' wins, 2 if 'o' wins, 0 if no one wins
+ */
