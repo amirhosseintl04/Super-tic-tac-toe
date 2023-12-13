@@ -1,60 +1,17 @@
-switch (getch())
-{
-    case KEY_UP:
-        if (i > 0 && mat00[i - 1][j] == ".") {
-            mat00[i][j] = temp;
-            temp = mat00[i - 1][j];
-            i--;
-            system("cls");
-            if (k % 2 == 0 && mat00[i][j] != "x")
-                mat00[i][j] = "o";
-            else if (k % 2 == 1 && mat00[i][j] != "o")
-                mat00[i][j] = "x";
-            drawBoard(mat00);
-        }
-        break;
+do {
+        int keyPressed = getch();
 
-    case KEY_DOWN:
-        if (i < 2 && mat00[i + 1][j] == ".") {
-            mat00[i][j] = temp;
-            temp = mat00[i + 1][j];
-            i++;
-            system("cls");
-            if (k % 2 == 0 && mat00[i][j] != "x")
-                mat00[i][j] = "o";
-            else if (k % 2 == 1 && mat00[i][j] != "o")
-                mat00[i][j] = "x";
-            drawBoard(mat00);
+        // Check if the key is a numeric key
+        if (keyPressed >= '1' && keyPressed <= '9') {
+            if (!move) {
+                // If the player has already made a move, prevent them from pressing a different number
+                system("cls");
+                std::cout << "You can't move to a different position after making a move." << std::endl;
+                drawBoard(mat);
+                std::cout << "\nOriginal" << std::endl;
+                drawBoard(ogMat);
+                continue;
+            }
         }
-        break;
 
-    case KEY_LEFT:
-        if (j > 0 && mat00[i][j - 1] == ".") {
-            mat00[i][j] = temp;
-            temp = mat00[i][j - 1];
-            j--;
-            system("cls");
-            if (k % 2 == 0 && mat00[i][j] != "x")
-                mat00[i][j] = "o";
-            else if (k % 2 == 1 && mat00[i][j] != "o")
-                mat00[i][j] = "x";
-            drawBoard(mat00);
-        }
-        break;
-
-    case KEY_RIGHT:
-        if (j < 2 && mat00[i][j + 1] == ".") {
-            mat00[i][j] = temp;
-            temp = mat00[i][j + 1];
-            j++;
-            system("cls");
-            if (k % 2 == 0 && mat00[i][j] != "x")
-                mat00[i][j] = "o";
-            else if (k % 2 == 1 && mat00[i][j] != "o")
-                mat00[i][j] = "x";
-            drawBoard(mat00);
-        }
-        break;
-
-    // Other cases...
-}
+        switch (keyPressed) {
