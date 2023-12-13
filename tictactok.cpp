@@ -3,7 +3,10 @@
 
 #define RED "\033[31m"
 #define LBLUE "\033[94m"
+#define GREEN "\033[32m"
+#define MAGENTA "\033[35m"
 #define RESET "\033[0m"
+#define DGRAY "\033[90m"
 
 #define Enter 13
 #define Back 8
@@ -64,24 +67,27 @@ int Win(char matrix[][3])
 
     return 0;
 }
-void drawBoard(char matrix[][3]){
-    std::cout << "+---+---+---+" << std::endl;
-
+void drawBoard(char matrix[][3], const char* color){
+    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
     for (int i = 0; i < 3; i++){
         // std::cout << i + 1 << " ";
-        std::cout << "|";
+        std::cout <<color<< "|"<<RESET;
         for (int j = 0; j < 3; j++){
-
-            std::cout << " " << matrix[i][j] << " ";
-            if (j < 2) std::cout << "|";
+            if (matrix[i][j]=='x')
+                {std::cout << " " <<RED<< matrix[i][j] <<RESET<< " ";}
+            else if (matrix[i][j]=='o')
+                {std::cout << " " <<LBLUE<< matrix[i][j] <<RESET<< " ";}
+            else
+                {std::cout << " " <<DGRAY<< matrix[i][j] <<RESET<< " ";}
+            
+            if (j < 2) std::cout <<color<< "|"<<RESET;
         }
-        std::cout << "|";
+        std::cout <<color<< "|"<<RESET;
         std::cout << std::endl;
         if (i < 2)
-            std::cout << "+---+---+---+" << std::endl;
+            std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
     }
-    std::cout << "+---+---+---+" << std::endl;
-    std::cout << std::endl;
+    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
 }
 
 void initialize(char mat[3][3]){
@@ -102,49 +108,59 @@ void turn(char (&ogMat)[3][3],char mat[3][3], int& k, bool& move, int i, int j){
         }else{
             mat[i][j] = 'x';
         }
-        drawBoard(mat);
+        std::cout << "Play board" << std::endl ;
+        drawBoard(mat,MAGENTA);
         std::cout << "\nOriginal" << std::endl ;
-        drawBoard(ogMat);
+        drawBoard(ogMat,GREEN);
         move = true;
     }
 }
 void Switch(char (&ogMat)[3][3],int& k, bool& move, char mat[3][3], bool& enter,int& i,int j){
     
     do{
-
-        switch (getch()){
-
-        case '1': i = 2; j = 0; turn(ogMat,mat, k, move, i, j); break;
-        case '2': i = 2; j = 1; turn(ogMat,mat, k, move, i, j); break;
-        case '3': i = 2; j = 2; turn(ogMat,mat, k, move, i, j); break;
-        case '4': i = 1; j = 0; turn(ogMat,mat, k, move, i, j); break;
-        case '5': i = 1; j = 1; turn(ogMat,mat, k, move, i, j); break;
-        case '6': i = 1; j = 2; turn(ogMat,mat, k, move, i, j); break;
-        case '7': i = 0; j = 0; turn(ogMat,mat, k, move, i, j); break;
-        case '8': i = 0; j = 1; turn(ogMat,mat, k, move, i, j); break;
-        case '9': i = 0; j = 2; turn(ogMat,mat, k, move, i, j); break;
-
-        case Back:
-            system("cls");
-            mat[i][j] = '.';
-            drawBoard(mat);
-            std::cout << "\nOriginal" << std::endl ;
-            drawBoard(ogMat);
-            move = false;
-            break;
-
-        case Enter:
-            if (move){
-                enter = false;
-            }else{
-                 std::cout << "enteret nashod ";
+        int keyPressed = getch();
+        if (keyPressed >= '1' && keyPressed <= '9') {
+            if (move) {
+                system("cls");
+                std::cout << "Play board" << std::endl ;
+                std::cout << "You can't move to a different position after making a move." << std::endl;
+                drawBoard(mat,MAGENTA);
+                std::cout << "\nOriginal" << std::endl;
+                drawBoard(ogMat,GREEN);
+                continue;
             }
-            break;
+        }
+        switch (keyPressed){
+            case '1': i = 2; j = 0; turn(ogMat,mat, k, move, i, j); break;
+            case '2': i = 2; j = 1; turn(ogMat,mat, k, move, i, j); break;
+            case '3': i = 2; j = 2; turn(ogMat,mat, k, move, i, j); break;
+            case '4': i = 1; j = 0; turn(ogMat,mat, k, move, i, j); break;
+            case '5': i = 1; j = 1; turn(ogMat,mat, k, move, i, j); break;
+            case '6': i = 1; j = 2; turn(ogMat,mat, k, move, i, j); break;
+            case '7': i = 0; j = 0; turn(ogMat,mat, k, move, i, j); break;
+            case '8': i = 0; j = 1; turn(ogMat,mat, k, move, i, j); break;
+            case '9': i = 0; j = 2; turn(ogMat,mat, k, move, i, j); break;
             
-        default:
-            system("cls");
-            std::cout << "kossher vared nakon" << std::endl;
-            break;
+            case Back:
+                system("cls"); mat[i][j] = '.'; 
+                std::cout << "Play board" << std::endl ;
+                drawBoard(mat,MAGENTA);
+                std::cout << "\nOriginal" << std::endl ;
+                drawBoard(ogMat,GREEN); move = false;
+                break;
+    
+            case Enter:
+                if (move){
+                    enter = false;
+                }else{
+                     std::cout << "enteret nashod ";
+                }
+                break;
+                
+            default:
+                system("cls");
+                std::cout << "kossher vared nakon" << std::endl;
+                break;
         }
     } while (enter);
 }
@@ -155,9 +171,10 @@ void game(char (&ogMat)[3][3],char mat[3][3] , bool move , int& i ,int& j ,int x
     {
         system("cls");
         bool enter = true;
-        drawBoard(mat);
+        std::cout << "Play board" << std::endl ;
+        drawBoard(mat,MAGENTA);
         std::cout << "\nOriginal" << std::endl ;
-        drawBoard(ogMat);
+        drawBoard(ogMat,GREEN);
         
         Switch(ogMat,k, move, mat, enter,i,j);
 
@@ -185,25 +202,22 @@ int main()
     system("cls");
     initialize(ogMat);
     std::cout<<"Orginal\n";
-    drawBoard(ogMat);
+    drawBoard(ogMat,GREEN);
     for(int e=0; e<9;e++){
     switch (getch()){
 
-        case '1': x = 2; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '2': x = 2; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '3': x = 2; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '4': x = 1; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '5': x = 1; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '6': x = 1; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '7': x = 0; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '8': x = 0; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
-        case '9': x = 0; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '1': x = 2; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '2': x = 2; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '3': x = 2; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '4': x = 1; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '5': x = 1; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '6': x = 1; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '7': x = 0; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '8': x = 0; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
+        case '9': x = 0; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat,GREEN);if (Win(ogMat) == 1){std::cout <<RED<< "X won\n";return 0;}else if (Win(ogMat) == 2){std::cout <<LBLUE<< "O won\n";return 0;} break;
         
         }
     }
-           
-    //vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;}
-
     std::cout << "DRAW";
     
     system("pause") ;
