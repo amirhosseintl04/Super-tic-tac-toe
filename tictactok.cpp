@@ -16,47 +16,47 @@
     * @param matrix lkgfgdlkgdl 
     * @return if 1 then x win, if 2 o win, otherdftd tie
     */
-int Win(std::string matrix[][3])
+int Win(char matrix[][3])
 {
 
     for (int i = 0; i < 3; i++){
-        if (matrix[i][0] != "." && matrix[i][1] != "." && matrix[i][2] != "."){
+        if (matrix[i][0] != '.' && matrix[i][1] != '.' && matrix[i][2] != '.'){
             if (matrix[i][0] == matrix[i][1] && matrix[i][1] == matrix[i][2]){
 
-                if (matrix[i][0] == "x"){
+                if (matrix[i][0] == 'x'){
                     return 1;
-                }else if (matrix[i][0] == "o"){
+                }else if (matrix[i][0] == 'o'){
                     return 2;
                 }
             }
         }
-        if (matrix[0][i] != "." && matrix[1][i] != "." && matrix[2][i] != "."){
+        if (matrix[0][i] != '.' && matrix[1][i] != '.' && matrix[2][i] != '.'){
             if (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i]){
                 
-                if (matrix[0][i] == "x"){
+                if (matrix[0][i] == 'x'){
                     return 1;
-                }else if (matrix[0][i] == "o"){
+                }else if (matrix[0][i] == 'o'){
                     return 2;
                 }
             }
         }
     }
-    if (matrix[0][0] != "." && matrix[1][1] != "." && matrix[2][2] != "."){
+    if (matrix[0][0] != '.' && matrix[1][1] != '.' && matrix[2][2] != '.'){
         if (matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2]){
-            if (matrix[0][0] == "x"){
+            if (matrix[0][0] == 'x'){
                 return 1;
             }
-            else if (matrix[0][0] == "o"){
+            else if (matrix[0][0] == 'o'){
                 return 2;
             }
         }
     }
-    if (matrix[2][0] != "." && matrix[1][1] != "." && matrix[0][2] != "."){
+    if (matrix[2][0] != '.' && matrix[1][1] != '.' && matrix[0][2] != '.'){
         if (matrix[2][0] == matrix[1][1] && matrix[1][1] == matrix[0][2]){
 
-            if (matrix[1][1] == "x"){
+            if (matrix[1][1] == 'x'){
                 return 1;
-            }else if (matrix[1][1] == "o"){
+            }else if (matrix[1][1] == 'o'){
                 return 2;
             }
         }
@@ -64,7 +64,7 @@ int Win(std::string matrix[][3])
 
     return 0;
 }
-void drawBoard(std::string matrix[][3]){
+void drawBoard(char matrix[][3]){
     std::cout << "+---+---+---+" << std::endl;
 
     for (int i = 0; i < 3; i++){
@@ -84,23 +84,23 @@ void drawBoard(std::string matrix[][3]){
     std::cout << std::endl;
 }
 
-void initialize(std::string mat[3][3]){
+void initialize(char mat[3][3]){
     
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++){
-            mat[i][j] = ".";
+            mat[i][j] = '.';
         }
     }
 }
 
-void turn(std::string ogMat[3][3],std::string mat[3][3], int& k, bool& move, int i, int j){
+void turn(char (&ogMat)[3][3],char mat[3][3], int& k, bool& move, int i, int j){
 
-    if (mat[i][j] == "."){
+    if (mat[i][j] == '.'){
         system("cls");
         if (k % 2 == 0){
-            mat[i][j] = "o";
+            mat[i][j] = 'o';
         }else{
-            mat[i][j] = "x";
+            mat[i][j] = 'x';
         }
         drawBoard(mat);
         std::cout << "\nOriginal" << std::endl ;
@@ -108,7 +108,7 @@ void turn(std::string ogMat[3][3],std::string mat[3][3], int& k, bool& move, int
         move = true;
     }
 }
-void Switch(std::string ogMat[3][3],int& k, bool& move, std::string mat[3][3], bool& enter,int& i,int j){
+void Switch(char (&ogMat)[3][3],int& k, bool& move, char mat[3][3], bool& enter,int& i,int j){
     
     do{
 
@@ -126,7 +126,7 @@ void Switch(std::string ogMat[3][3],int& k, bool& move, std::string mat[3][3], b
 
         case Back:
             system("cls");
-            mat[i][j] = ".";
+            mat[i][j] = '.';
             drawBoard(mat);
             std::cout << "\nOriginal" << std::endl ;
             drawBoard(ogMat);
@@ -148,7 +148,7 @@ void Switch(std::string ogMat[3][3],int& k, bool& move, std::string mat[3][3], b
         }
     } while (enter);
 }
-void game(std::string ogMat[3][3],std::string mat[3][3] , bool move , int& i ,int& j ,int x,int y){
+void game(char (&ogMat)[3][3],char mat[3][3] , bool move , int& i ,int& j ,int x,int y){
     initialize(mat);
     int victory ;
     for (int k = 0; k < 9; k++)
@@ -164,20 +164,20 @@ void game(std::string ogMat[3][3],std::string mat[3][3] , bool move , int& i ,in
         victory = Win(mat);
         if (victory == 1){
             //std::cout << "X won";
-            ogMat[x][y]="X";
+            ogMat[x][y]='x';
             return;
         }else if (victory == 2){
-            ogMat[x][y]="O";
+            ogMat[x][y]='o';
             return;
         }
     }
-    ogMat[x][y]="D";
+    ogMat[x][y]='d';
     //std::cout << "DRAW";
 }
 int main()
 {
-    std::string ogMat[3][3];
-    std::string gameMat[3][3];
+    char ogMat[3][3];
+    char gameMat[3][3];
     int i,j,x,y;
     int vicivici;
     bool move = false;
@@ -189,15 +189,15 @@ int main()
     for(int e=0; e<9;e++){
     switch (getch()){
 
-        case '1': x = 2; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '2': x = 2; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '3': x = 2; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '4': x = 1; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '5': x = 1; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '6': x = 1; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '7': x = 0; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '8': x = 0; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
-        case '9': x = 0; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);vicivici = Win(ogMat);if (vicivici == 1){std::cout << "X won";return 0;}else if (vicivici == 2){std::cout << "O won";return 0;} break;
+        case '1': x = 2; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '2': x = 2; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '3': x = 2; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '4': x = 1; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '5': x = 1; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '6': x = 1; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '7': x = 0; y = 0;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '8': x = 0; y = 1;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
+        case '9': x = 0; y = 2;game(ogMat ,gameMat , move , i , j , x , y); system("cls");std::cout<<"Orginal\n"; drawBoard(ogMat);if (Win(ogMat) == 1){std::cout << "X won";return 0;}else if (Win(ogMat) == 2){std::cout << "O won";return 0;} break;
         
         }
     }
