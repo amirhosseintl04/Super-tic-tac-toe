@@ -12,13 +12,6 @@
 #define Back 8
 #define Space 32
 
-    /**
-    * return 1 == x won
-    * return 2 == o won
-    * retrurn 0 == no one won
-    * @param matrix lkgfgdlkgdl 
-    * @return if 1 then x win, if 2 o win, otherdftd tie
-    */
 int Win(char matrix[][3])
 {
 
@@ -152,6 +145,7 @@ void Switch(char (&ogMat)[3][3],int& k, bool& move, char mat[3][3], bool& enter,
             case Enter:
                 if (move){
                     enter = false;
+                    move=false;
                 }else{
                      std::cout << "enteret nashod ";
                 }
