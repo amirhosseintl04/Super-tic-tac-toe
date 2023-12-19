@@ -147,13 +147,13 @@ void Switch(char (&ogMat)[3][3],int& k, bool& move, char mat[3][3], bool& enter,
                     enter = false;
                     move=false;
                 }else{
-                     std::cout << "enteret nashod ";
+                     std::cout << "enteret nashod! ";
                 }
                 break;
                 
             default:
                 system("cls");
-                std::cout << "kossher vared nakon" << std::endl;
+                std::cout << "dorost vared kon!" << std::endl;
                 break;
         }
     } while (enter);
