@@ -9,13 +9,77 @@
 #define MAGENTA "\033[35m"
 #define RESET "\033[0m"
 #define DGRAY "\033[90m"
+#define YELLOW  "\033[33m"
+#define CYAN    "\033[36m"
+#define BLUE    "\033[34m"
+#define WHITE   "\033[37m"
 
-struct mats
+struct mat
 {
-    char matrix[3][3];
+    char matrix[3][3]={{'.', '.', '.'}, {'.', '.', '.'}, {'.', '.', '.'}};
 };
 
+void drawArzBoard(char matrix1[][3],char matrix2[][3],char matrix3[][3]){
+    const char* color=RED;
+    for (int i = 0; i < 3; i++){
+        // std::cout << i + 1 << " ";
+        std::cout <<RED<< "|"<<RESET;
+        for (int j = 0; j < 3; j++){
+            std::cout << " " <<WHITE<< matrix1[i][j] <<RESET<< " ";
+            if (j < 2) std::cout <<RED<< "|"<<RESET;
+        }
+        std::cout <<RED<< "|"<<RESET;
+        for (int j = 0; j < 3; j++){
+            std::cout << " " <<WHITE<< matrix2[i][j] <<RESET<< " ";
+            if (j < 2) std::cout <<BLUE<< "|"<<RESET;
+        }
+        std::cout <<LBLUE<< "|"<<RESET;
+        for (int j = 0; j < 3; j++){
+            std::cout << " " <<WHITE<< matrix3[i][j] <<RESET<< " ";
+            if (j < 2) std::cout <<GREEN<< "|"<<RESET;
+        }
+        
+        std::cout <<GREEN<< "|"<<RESET;
+        std::cout << std::endl;
+        if (i < 2)
+            std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    }
+}
 
+void drawBoard(mat boards[]){
+    const char* color=RED;
+    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    drawArzBoard(boards[0].matrix,boards[1].matrix,boards[2].matrix);
+    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    drawArzBoard(boards[3].matrix,boards[4].matrix,boards[5].matrix);
+    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    drawArzBoard(boards[6].matrix,boards[7].matrix,boards[8].matrix);
+    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+}
+
+void WdrawBoard(char matrix[][3]){
+    const char* color=RED;
+    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+    for (int i = 0; i < 3; i++){
+        // std::cout << i + 1 << " ";
+        std::cout <<color<< "|"<<RESET;
+        for (int j = 0; j < 3; j++){
+            if (matrix[i][j]=='x')
+                {std::cout << " " <<RED<< matrix[i][j] <<RESET<< " ";}
+            else if (matrix[i][j]=='o')
+                {std::cout << " " <<LBLUE<< matrix[i][j] <<RESET<< " ";}
+            else
+                {std::cout << " " <<DGRAY<< matrix[i][j] <<RESET<< " ";}
+            
+            if (j < 2) std::cout <<color<< "|"<<RESET;
+        }
+        std::cout <<color<< "|"<<RESET;
+        std::cout << std::endl;
+        if (i < 2)
+            std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+    }
+    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+}
 int Win(char matrix[][3])
 {
     for (int i = 0; i < 3; i++){
@@ -63,195 +127,101 @@ int Win(char matrix[][3])
 
     return 0;
 }
-void drawBoard(char matrix[][3], const char* color){
-    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-    for (int i = 0; i < 3; i++){
-        std::cout <<color<< "|"<<RESET;
-        for (int j = 0; j < 3; j++){
-            if (matrix[i][j]=='x')
-                {std::cout << " " <<RED<< matrix[i][j] <<RESET<< " ";}
-            else if (matrix[i][j]=='o')
-                {std::cout << " " <<LBLUE<< matrix[i][j] <<RESET<< " ";}
-            else
-                {std::cout << " " <<DGRAY<< matrix[i][j] <<RESET<< " ";}
-            
-            if (j < 2) std::cout <<color<< "|"<<RESET;
-        }
-        std::cout <<color<< "|"<<RESET;
-        std::cout << std::endl;
-        if (i < 2)
-            std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-    }
-    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-}
 
-void drawGameHistory(char ogMat[][3], char gameMat[][3][3], int numMoves) {
-    const char* color = MAGENTA;
-
-    for (int i = 0; i < 3; i++) {
-        std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-
-        for (int move = 0; move < numMoves; move++) {
-            std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-        }
-
-        std::cout << std::endl;
-
-        for (int j = 0; j < 3; j++) {
-            std::cout << color << "|" << RESET;
-
-            for (int move = 0; move < numMoves; move++) {
-                for (int k = 0; k < 3; k++) {
-                    char symbol = gameMat[move][i][k];
-                    if (symbol == 'x') {
-                        std::cout << " " << RED << symbol << RESET << " ";
-                    } else if (symbol == 'o') {
-                        std::cout << " " << LBLUE << symbol << RESET << " ";
-                    } else {
-                        std::cout << " " << DGRAY << symbol << RESET << " ";
-                    }
-                }
-                std::cout << color << "|" << RESET;
-            }
-
-            std::cout << std::endl;
-
-            if (i < 2) {
-                std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-
-                for (int move = 0; move < numMoves; move++) {
-                    std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-                }
-
-                std::cout << std::endl;
-            }
-        }
-    }
-
-    std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-
-    for (int move = 0; move < numMoves; move++) {
-        std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-    }
-
-    std::cout << std::endl;
-
-    // Display the original matrix (ogMat) on the last row
-    for (int i = 0; i < 3; i++) {
-        std::cout << color << "|" << RESET;
-
-        for (int j = 0; j < 3; j++) {
-            char symbol = ogMat[i][j];
-            if (symbol == 'x') {
-                std::cout << " " << RED << symbol << RESET << " ";
-            } else if (symbol == 'o') {
-                std::cout << " " << LBLUE << symbol << RESET << " ";
-            } else {
-                std::cout << " " << DGRAY << symbol << RESET << " ";
-            }
-        }
-
-        std::cout << color << "|" << RESET;
-    }
-
-    std::cout << std::endl << color << "+---+---+---+" << RESET << std::string(4, ' ');
-
-    for (int move = 0; move < numMoves; move++) {
-        std::cout << color << "+---+---+---+" << RESET << std::string(4, ' ');
-    }
-
-    std::cout << std::endl;
-}
-
-
-
-void initialize(char mat[3][3]){
-    
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            mat[i][j] = '.';
-        }
-    }
-}
-
-void turn(char (&ogMat)[3][3] ,char mat[3][3], int& k){
-
+void turn(mat boards[],char mat[3][3], int& i, int& j,int& k){
     std::srand(static_cast<unsigned int>(std::time(0)));
-    int randX,randY;
-    do{
-        randX = 0 + std::rand() % 3;
-        randY = 0 + std::rand() % 3;
-    }while(mat[randX][randY] != '.');
-        system("cls");
-        if (k % 2 == 0){
-            mat[randX][randY] = 'o';
-        }else{
-            mat[randX][randY] = 'x';
-        }
-        std::cout << "Play board" << std::endl ;
-        drawBoard(mat,MAGENTA);
-        std::cout << "\nOriginal" << std::endl ;
-        drawBoard(ogMat,GREEN);
-        sleep(1);
+    if (k % 2 == 0){
+        do{
+            i = 0 + std::rand() % 3;
+            j = 0 + std::rand() % 3;
+        }while(mat[i][j] != '.');
+        mat[i][j] = 'o';
+    }else{
+        do{
+            i = 0 + std::rand() % 3;
+            j = 0 + std::rand() % 3;
+        }while(mat[i][j] != '.');
+        mat[i][j] = 'x';
     }
+    system("cls");
+    drawBoard(boards);
+    WdrawBoard(boards[9].matrix);
+    //sleep(1);
+}
 
-void game( mats mat[9], char (&ogMat)[3][3],char gameMat[3][3] , bool move , int& i ,int& j ,int x,int y){
-
-    while(true){
-        initialize(gameMat);
-        for (int k = 0; k < 9; k++)
-        {
-            system("cls");
-            std::cout << "Play board" << std::endl ;
-            drawBoard(gameMat,MAGENTA);
-            std::cout << "\nOriginal" << std::endl ;
-            drawBoard(ogMat,GREEN);
-
-            turn(ogMat, gameMat, k);
-
-            if (Win(gameMat) == 1){
-                ogMat[x][y]='x';
-                return;
-            }else if (Win(gameMat) == 2){
-                ogMat[x][y]='o';
-                return;
+void game( mat boards[9] ,int& boardNUm, int& i ,int& j,int& k ){
+    
+    turn( boards,boards[boardNUm].matrix,i,j,k);
+    int r,t;
+    if (boardNUm==0){r=0; t=0;}
+    if (boardNUm==1){r=0; t=1;}
+    if (boardNUm==2){r=0; t=2;}
+    if (boardNUm==3){r=1; t=0;}
+    if (boardNUm==4){r=1; t=1;}
+    if (boardNUm==5){r=1; t=2;}
+    if (boardNUm==6){r=2; t=0;}
+    if (boardNUm==7){r=2; t=1;}
+    if (boardNUm==8){r=2; t=2;}
+    if (Win(boards[boardNUm].matrix) == 1){
+        for (int p = 0; p < 3; p++){
+            for (int u = 0; u < 3; u++){
+                boards[boardNUm].matrix[p][u] = 'x';
             }
         }
-    }
+        boards[9].matrix[r][t] = 'x';
+    }else if (Win(boards[boardNUm].matrix) == 2){
+        for (int p = 0; p < 3; p++){
+            for (int u = 0; u < 3; u++){
+                boards[boardNUm].matrix[p][u] = 'o';
+            }
+        }
+        boards[9].matrix[r][t] ='o';
+    }    
+    return;    
 }
 int main()
 {
-    char ogMat[3][3];
-
-    mats mat[9];
-
-    char gameMat[3][3];
-
-    int i,j,x,y;
-    int vicivici;
-    bool move = false;
+    mat boards[10];
     std::srand(static_cast<unsigned int>(std::time(0)));
+    
+    //std::cout<<"Orginal\n";
     system("cls");
-    initialize(ogMat);
-    std::cout<<"Orginal\n";
-    drawBoard(ogMat,GREEN);
+    drawBoard(boards);
+    WdrawBoard(boards[9].matrix);
+    int boardNUm,i=0,j=0;
+    for(int k = 0 ; k < 81 ;k++){
+        
+            if(boards[9].matrix[i][j]!='.'){
+                std::srand(static_cast<unsigned int>(std::time(0)));
+                while(boards[9].matrix[i][j] != '.'){
+                    i = 0 + std::rand() % 3;
+                    j = 0 + std::rand() % 3;
+                }
+            }
+            if (i==0 && j==0){boardNUm=0;}
+            if (i==0 && j==1){boardNUm=1;}
+            if (i==0 && j==2){boardNUm=2;}
+            if (i==1 && j==0){boardNUm=3;}
+            if (i==1 && j==1){boardNUm=4;}
+            if (i==1 && j==2){boardNUm=5;}
+            if (i==2 && j==0){boardNUm=6;}
+            if (i==2 && j==1){boardNUm=7;}
+            if (i==2 && j==2){boardNUm=8;}
+            game(boards,boardNUm,i,j,k);
 
-    for(int e=0; e<9;e++){
-        int x,y;
-        std::cout<<"Orginal\n"; 
-        do{
-        x = 0 + std::rand() % 3;
-        y = 0 + std::rand() % 3;
-        }while(ogMat[x][y] != '.');
-        game(mat,ogMat ,gameMat , move , i , j , x , y);
-        system("cls");
-        drawBoard(ogMat,GREEN);
-        if (Win(ogMat) == 1){
+            
+
+        if (Win(boards[9].matrix) == 1){
+            system("cls");
+            drawBoard(boards);
+            WdrawBoard(boards[9].matrix);
             std::cout <<RED<< "X won\n";return 0;
-        }else if (Win(ogMat) == 2){
+        }else if (Win(boards[9].matrix) == 2){
+            system("cls");
+            drawBoard(boards);
+            WdrawBoard(boards[9].matrix);
             std::cout <<LBLUE<< "O won\n";return 0;
         }
-        sleep(1);      
     }
     std::cout << "DRAW";
     
