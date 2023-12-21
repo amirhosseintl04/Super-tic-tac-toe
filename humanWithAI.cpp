@@ -92,12 +92,12 @@ void initialize(char mat[3][3]){
 int minimax(char mat[3][3], int depth, bool isMaximizing) {
     int score = Win(mat);
 
-    // Base cases: return the score if the game is over
-    if (score == 1) return -1; // 'x' wins
-    if (score == 2) return 1;  // 'o' wins
-    if (depth == 0) return 0;  // Depth limit reached or game is a draw
+    
+    if (score == 1) return -1; 
+    if (score == 2) return 1;  
+    if (depth == 0) return 0;  
 
-    // If it's the maximizing player's turn ('o'), find the maximum score
+    
     if (isMaximizing) {
         int maxScore = -1000;
         for (int i = 0; i < 3; ++i) {
@@ -105,13 +105,13 @@ int minimax(char mat[3][3], int depth, bool isMaximizing) {
                 if (mat[i][j] == '.') {
                     mat[i][j] = 'o';
                     maxScore = std::max(maxScore, minimax(mat, depth - 1, !isMaximizing));
-                    mat[i][j] = '.'; // Undo the move
+                    mat[i][j] = '.'; 
                 }
             }
         }
         return maxScore;
     }
-    // If it's the minimizing player's turn ('x'), find the minimum score
+   
     else {
         int minScore = 1000;
         for (int i = 0; i < 3; ++i) {
@@ -119,7 +119,7 @@ int minimax(char mat[3][3], int depth, bool isMaximizing) {
                 if (mat[i][j] == '.') {
                     mat[i][j] = 'x';
                     minScore = std::min(minScore, minimax(mat, depth - 1, !isMaximizing));
-                    mat[i][j] = '.'; // Undo the move
+                    mat[i][j] = '.'; 
                 }
             }
         }
@@ -127,21 +127,20 @@ int minimax(char mat[3][3], int depth, bool isMaximizing) {
     }
 }
 
-// Function to find the best move for the 'o' player using minimax
+
 void findBestMove(char mat[3][3]) {
     int bestScore = -1000;
     int bestMoveI = -1;
     int bestMoveJ = -1;
 
-    // Traverse all empty cells and find the move with the highest score
+    
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             if (mat[i][j] == '.') {
                 mat[i][j] = 'o';
-                int moveScore = minimax(mat, 2, false); // You can adjust the depth as needed
-                mat[i][j] = '.'; // Undo the move
-
-                // Update the best move if the current move has a higher score
+                int moveScore = minimax(mat, 2, false);
+                mat[i][j] = '.'; 
+                
                 if (moveScore > bestScore) {
                     bestScore = moveScore;
                     bestMoveI = i;
@@ -151,7 +150,7 @@ void findBestMove(char mat[3][3]) {
         }
     }
 
-    // Make the best move for the 'o' player
+    
     mat[bestMoveI][bestMoveJ] = 'o';
 }
 
