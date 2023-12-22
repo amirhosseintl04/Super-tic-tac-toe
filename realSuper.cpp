@@ -57,29 +57,29 @@ void drawBoard(mat boards[]){
     std::cout<<MAGENTA<< "+===+===+===+"<<RESET<<YELLOW<<"===+===+==="<<RESET<<CYAN<<"+===+===+===+"<<RESET<< std::endl;
 }
 
-void WdrawBoard(char matrix[][3]){
-    const char* color=RED;
-    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-    for (int i = 0; i < 3; i++){
-        // std::cout << i + 1 << " ";
-        std::cout <<color<< "|"<<RESET;
-        for (int j = 0; j < 3; j++){
-            if (matrix[i][j]=='x')
-                {std::cout << " " <<RED<< matrix[i][j] <<RESET<< " ";}
-            else if (matrix[i][j]=='o')
-                {std::cout << " " <<LBLUE<< matrix[i][j] <<RESET<< " ";}
-            else
-                {std::cout << " " <<DGRAY<< matrix[i][j] <<RESET<< " ";}
+// void WdrawBoard(char matrix[][3]){
+//     const char* color=RED;
+//     std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+//     for (int i = 0; i < 3; i++){
+//         // std::cout << i + 1 << " ";
+//         std::cout <<color<< "|"<<RESET;
+//         for (int j = 0; j < 3; j++){
+//             if (matrix[i][j]=='x')
+//                 {std::cout << " " <<RED<< matrix[i][j] <<RESET<< " ";}
+//             else if (matrix[i][j]=='o')
+//                 {std::cout << " " <<LBLUE<< matrix[i][j] <<RESET<< " ";}
+//             else
+//                 {std::cout << " " <<DGRAY<< matrix[i][j] <<RESET<< " ";}
             
-            if (j < 2) std::cout <<color<< "|"<<RESET;
-        }
-        std::cout <<color<< "|"<<RESET;
-        std::cout << std::endl;
-        if (i < 2)
-            std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-    }
-    std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
-}
+//             if (j < 2) std::cout <<color<< "|"<<RESET;
+//         }
+//         std::cout <<color<< "|"<<RESET;
+//         std::cout << std::endl;
+//         if (i < 2)
+//             std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+//     }
+//     std::cout <<color<< "+---+---+---+"<<RESET<< std::endl;
+// }
 int Win(char matrix[][3])
 {
     for (int i = 0; i < 3; i++){
