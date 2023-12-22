@@ -42,19 +42,19 @@ void drawArzBoard(char matrix1[][3],char matrix2[][3],char matrix3[][3]){
         std::cout <<GREEN<< "|"<<RESET;
         std::cout << std::endl;
         if (i < 2)
-            std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+            std::cout<<WHITE<< "+---+---+---+"<<RESET<<WHITE<<"---+---+---"<<RESET<<WHITE<<"+---+---+---+"<<RESET<< std::endl;
     }
 }
 
 void drawBoard(mat boards[]){
     const char* color=RED;
-    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    std::cout<<MAGENTA<< "+===+===+===+"<<RESET<<YELLOW<<"===+===+==="<<RESET<<CYAN<<"+===+===+===+"<<RESET<< std::endl;
     drawArzBoard(boards[0].matrix,boards[1].matrix,boards[2].matrix);
-    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    std::cout<<MAGENTA<< "+===+===+===+"<<RESET<<YELLOW<<"===+===+==="<<RESET<<CYAN<<"+===+===+===+"<<RESET<< std::endl;
     drawArzBoard(boards[3].matrix,boards[4].matrix,boards[5].matrix);
-    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    std::cout<<MAGENTA<< "+===+===+===+"<<RESET<<YELLOW<<"===+===+==="<<RESET<<CYAN<<"+===+===+===+"<<RESET<< std::endl;
     drawArzBoard(boards[6].matrix,boards[7].matrix,boards[8].matrix);
-    std::cout<<MAGENTA<< "+---+---+---+"<<RESET<<YELLOW<<"---+---+---"<<RESET<<CYAN<<"+---+---+---+"<<RESET<< std::endl;
+    std::cout<<MAGENTA<< "+===+===+===+"<<RESET<<YELLOW<<"===+===+==="<<RESET<<CYAN<<"+===+===+===+"<<RESET<< std::endl;
 }
 
 void WdrawBoard(char matrix[][3]){
@@ -127,26 +127,206 @@ int Win(char matrix[][3])
 
     return 0;
 }
+//------------------------
+int minimax(char mat[3][3], int depth, bool isMaximizing) {
+    int score = Win(mat);
 
+    if (score == 1) return -1;
+    if (score == 2) return 1; 
+    if (depth == 0) return 0; 
+
+    if (isMaximizing) {
+        int maxScore = -1000;
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (mat[i][j] == '.') {
+                    mat[i][j] = 'o';
+                    maxScore = std::max(maxScore, minimax(mat, depth - 1, !isMaximizing));
+                    mat[i][j] = '.';
+                }
+            }
+        }
+        return maxScore;
+    }else {
+        int minScore = 1000;
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (mat[i][j] == '.') {
+                    mat[i][j] = 'x';
+                    minScore = std::min(minScore, minimax(mat, depth - 1, !isMaximizing));
+                    mat[i][j] = '.';
+                }
+            }
+        }
+        return minScore;
+    }
+}
+
+void findBestMove(char mat[3][3],int& i,int& j) {
+    int bestScore = -1000;
+    int bestMoveI = -1;
+    int bestMoveJ = -1;
+
+    for (int l = 0; l < 3; ++l) {
+        for (int b = 0; b < 3; ++b) {
+            if (mat[l][b] == '.') {
+                mat[l][b] = 'o';
+                int moveScore = minimax(mat, 2, false);
+                mat[l][b] = '.';
+
+                if (moveScore > bestScore) {
+                    bestScore = moveScore;
+                    bestMoveI = l;
+                    bestMoveJ = b;
+                }
+            }
+        }
+    }
+    i=bestMoveI;j=bestMoveJ;
+    mat[bestMoveI][bestMoveJ] = 'o';
+}
+
+void findBestIJo(char mat[3][3],int& i,int& j) {
+    int bestScore = -1000;
+    int bestMoveI = -1;
+    int bestMoveJ = -1;
+
+    for (int l = 0; l < 3; ++l) {
+        for (int b = 0; b < 3; ++b) {
+            if (mat[l][b] == '.') {
+                mat[l][b] = 'o';
+                int moveScore = minimax(mat, 2, false);
+                mat[l][b] = '.';
+
+                if (moveScore > bestScore) {
+                    bestScore = moveScore;
+                    bestMoveI = l;
+                    bestMoveJ = b;
+                }
+            }
+        }
+    }
+    i=bestMoveI;j=bestMoveJ;
+    //mat[bestMoveI][bestMoveJ] = 'o';
+}
+
+void findBestIJx(char mat[3][3],int& i,int& j) {
+    int bestScore = -1000;
+    int bestMoveI = -1;
+    int bestMoveJ = -1;
+
+    for (int l = 0; l < 3; ++l) {
+        for (int b = 0; b < 3; ++b) {
+            if (mat[l][b] == '.') {
+                mat[l][b] = 'x';
+                int moveScore = minimax(mat, 2, false);
+                mat[l][b] = '.';
+
+                if (moveScore > bestScore) {
+                    bestScore = moveScore;
+                    bestMoveI = l;
+                    bestMoveJ = b;
+                }
+            }
+        }
+    }
+    i=bestMoveI;j=bestMoveJ;
+    //mat[bestMoveI][bestMoveJ] = 'o';
+}
+//============================
+// int minimaxW(char mat[3][3], int depth, bool isMaximizing) {
+//     int score = Win(mat);
+
+//     if (score == 1) return -1;
+//     if (score == 2) return 1; 
+//     if (depth == 0) return 0; 
+
+//     if (isMaximizing) {
+//         int maxScore = -1000;
+//         for (int i = 0; i < 3; ++i) {
+//             for (int j = 0; j < 3; ++j) {
+//                 if (mat[i][j] == '.') {
+//                     mat[i][j] = 'x';
+//                     maxScore = std::max(maxScore, minimaxW(mat, depth - 1, !isMaximizing));
+//                     mat[i][j] = '.';
+//                 }
+//             }
+//         }
+//         return maxScore;
+//     }else {
+//         int minScore = 1000;
+//         for (int i = 0; i < 3; ++i) {
+//             for (int j = 0; j < 3; ++j) {
+//                 if (mat[i][j] == '.') {
+//                     mat[i][j] = 'o';
+//                     minScore = std::min(minScore, minimaxW(mat, depth - 1, !isMaximizing));
+//                     mat[i][j] = '.';
+//                 }
+//             }
+//         }
+//         return minScore;
+//     }
+// }
+
+// void findBestMoveW(char mat[3][3],int& i, int& j) {
+//     int bestScore = -1000;
+//     int bestMoveI = -1;
+//     int bestMoveJ = -1;
+
+//     for (int l = 0; l < 3; ++l) {
+//         for (int b = 0; b < 3; ++b) {
+//             if (mat[l][b] == '.') {
+//                 mat[l][b] = 'x';
+//                 int moveScore = minimaxW(mat, 2, false);
+//                 mat[l][b] = '.';
+
+//                 if (moveScore > bestScore) {
+//                     bestScore = moveScore;
+//                     bestMoveI = l;
+//                     bestMoveJ = b;
+//                 }
+//             }
+//         }
+//     }
+//     i=bestMoveI;j=bestMoveJ;
+//     mat[bestMoveI][bestMoveJ] = 'x';
+// }
+//============================
 void turn(mat boards[],char mat[3][3], int& i, int& j,int& k){
     std::srand(static_cast<unsigned int>(std::time(0)));
     if (k % 2 == 0){
-        do{
-            i = 0 + std::rand() % 3;
-            j = 0 + std::rand() % 3;
-        }while(mat[i][j] != '.');
-        mat[i][j] = 'o';
+        // do{
+        //     i = 0 + std::rand() % 3;
+        //     j = 0 + std::rand() % 3;
+        // }while(mat[i][j] != '.');
+        // mat[i][j] = 'o';
+        findBestMove(mat,i,j);
     }else{
-        do{
-            i = 0 + std::rand() % 3;
-            j = 0 + std::rand() % 3;
-        }while(mat[i][j] != '.');
+        // do{
+        //     i = 0 + std::rand() % 3;
+        //     j = 0 + std::rand() % 3;
+        // }while(mat[i][j] != '.');
+        // mat[i][j] = 'x';
+        //----------------------
+        //findBestMoveW(mat,i,j);
+        //---------------------
+        switch (getch()){
+            case '1': i = 2; j = 0; break;
+            case '2': i = 2; j = 1; break;
+            case '3': i = 2; j = 2; break;
+            case '4': i = 1; j = 0; break;
+            case '5': i = 1; j = 1; break;
+            case '6': i = 1; j = 2; break;
+            case '7': i = 0; j = 0; break;
+            case '8': i = 0; j = 1; break;
+            case '9': i = 0; j = 2; break;
+        }
         mat[i][j] = 'x';
     }
     system("cls");
     drawBoard(boards);
-    WdrawBoard(boards[9].matrix);
-    //sleep(1);
+    //WdrawBoard(boards[9].matrix);
+    sleep(1);
 }
 
 void game( mat boards[9] ,int& boardNUm, int& i ,int& j,int& k ){
@@ -187,15 +367,31 @@ int main()
     //std::cout<<"Orginal\n";
     system("cls");
     drawBoard(boards);
-    WdrawBoard(boards[9].matrix);
+    //WdrawBoard(boards[9].matrix);
     int boardNUm,i=0,j=0;
     for(int k = 0 ; k < 81 ;k++){
         
             if(boards[9].matrix[i][j]!='.'){
-                std::srand(static_cast<unsigned int>(std::time(0)));
                 while(boards[9].matrix[i][j] != '.'){
-                    i = 0 + std::rand() % 3;
-                    j = 0 + std::rand() % 3;
+                    // i = 0 + std::rand() % 3;
+                    // j = 0 + std::rand() % 3;
+                    if (k%2==0)
+                    {
+                        findBestIJo(boards[9].matrix,i,j);
+                    }else{
+                        switch (getch()){
+                            case '1': i = 2; j = 0; break;
+                            case '2': i = 2; j = 1; break;
+                            case '3': i = 2; j = 2; break;
+                            case '4': i = 1; j = 0; break;
+                            case '5': i = 1; j = 1; break;
+                            case '6': i = 1; j = 2; break;
+                            case '7': i = 0; j = 0; break;
+                            case '8': i = 0; j = 1; break;
+                            case '9': i = 0; j = 2; break;
+                        }
+                        //findBestIJx(boards[9].matrix,i,j);
+                    }
                 }
             }
             if (i==0 && j==0){boardNUm=0;}
@@ -214,12 +410,12 @@ int main()
         if (Win(boards[9].matrix) == 1){
             system("cls");
             drawBoard(boards);
-            WdrawBoard(boards[9].matrix);
+            //WdrawBoard(boards[9].matrix);
             std::cout <<RED<< "X won\n";return 0;
         }else if (Win(boards[9].matrix) == 2){
             system("cls");
             drawBoard(boards);
-            WdrawBoard(boards[9].matrix);
+            //WdrawBoard(boards[9].matrix);
             std::cout <<LBLUE<< "O won\n";return 0;
         }
     }
